@@ -1,0 +1,47 @@
+'use strict';
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Publication extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      this.belongsTo(models.Author)
+    }
+  };
+  Publication.init({
+    title: DataTypes.STRING,
+    body: DataTypes.TEXT,
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      field: 'updated_at'
+    },
+    authorId: {
+      type: DataTypes.INTEGER,
+      references: {
+        // This is a reference to another model
+        model: {
+          tableName: 'authors',
+          schema: 'public'
+        },
+        // This is the column name of the referenced model
+        key: 'id',
+      },
+      allowNull: false,
+      field: 'author_id'
+    },
+  }, {
+    sequelize,
+    tableName: 'publications'
+  });
+  return Publication;
+};

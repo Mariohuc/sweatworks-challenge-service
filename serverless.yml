@@ -1,0 +1,77 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: sweatworks-challenge-service
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: "2"
+
+plugins:
+  - serverless-offline #serverless-offline needs to be last in the list
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: /
+          method: GET
+  listAuthors:
+    handler: api/authors.index
+    memorySize: 128
+    description: List all authors
+    events:
+      - http:
+          path: /authors
+          method: GET
+  saveAuthor:
+    handler: api/authors.store
+    description: Save a new author
+    events:
+      - http:
+          path: /authors
+          method: POST
+  authorDetails:
+    handler: api/authors.show
+    description: Show details of an author
+    events:
+      - http:
+          path: /authors/{id}
+          method: GET
+  updateAuthor:
+    handler: api/authors.update
+    description: Update an author
+    events:
+      - http:
+          path: /authors/{id}
+          method: PATCH
+  deleteAuthor:
+    handler: api/authors.delete
+    description: Delete an author
+    events:
+      - http:
+          path: /authors/{id}
+          method: DELETE
