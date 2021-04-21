@@ -9,12 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Author)
     }
   };
   Publication.init({
-    title: DataTypes.STRING,
-    body: DataTypes.TEXT,
+    title: { type: DataTypes.STRING, validate: { notEmpty: true } },
+    body: { type: DataTypes.TEXT, validate: { notEmpty: true } },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,

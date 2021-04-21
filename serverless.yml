@@ -33,12 +33,6 @@ provider:
   lambdaHashingVersion: 20201221
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          path: /
-          method: GET
   listAuthors:
     handler: api/authors.index
     memorySize: 128
@@ -74,4 +68,40 @@ functions:
     events:
       - http:
           path: /authors/{id}
+          method: DELETE
+  listAuthorPublications:
+    handler: api/publications.index
+    memorySize: 128
+    description: List all publications of an author
+    events:
+      - http:
+          path: /authors/{author_id}/publications
+          method: GET
+  saveAuthorPublication:
+    handler: api/publications.store
+    description: Save a new publication of an author
+    events:
+      - http:
+          path: /authors/{author_id}/publications
+          method: POST
+  authorPublicationDetails:
+    handler: api/publications.show
+    description: Show details of an author's publication
+    events:
+      - http:
+          path: /authors/{author_id}/publications/{id}
+          method: GET
+  updateAuthorPublication:
+    handler: api/publications.update
+    description: Update an author's publication
+    events:
+      - http:
+          path: /authors/{author_id}/publications/{id}
+          method: PATCH
+  deleteAuthorPublication:
+    handler: api/publications.delete
+    description: Delete an author's publication
+    events:
+      - http:
+          path: /authors/{author_id}/publications/{id}
           method: DELETE
