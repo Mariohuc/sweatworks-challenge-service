@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Author.hasMany(models.Publication, {
-        foreignKey: "authorId"
+        foreignKey: "authorId",
+        onDelete: 'CASCADE'
       });
     }
   }

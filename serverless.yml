@@ -34,7 +34,7 @@ provider:
 
 functions:
   listAuthors:
-    handler: api/authors.index
+    handler: src/api/authors.index
     memorySize: 128
     description: List all authors
     events:
@@ -42,35 +42,35 @@ functions:
           path: /authors
           method: GET
   saveAuthor:
-    handler: api/authors.store
+    handler: src/api/authors.store
     description: Save a new author
     events:
       - http:
           path: /authors
           method: POST
   authorDetails:
-    handler: api/authors.show
+    handler: src/api/authors.show
     description: Show details of an author
     events:
       - http:
           path: /authors/{id}
           method: GET
   updateAuthor:
-    handler: api/authors.update
+    handler: src/api/authors.update
     description: Update an author
     events:
       - http:
           path: /authors/{id}
           method: PATCH
   deleteAuthor:
-    handler: api/authors.delete
+    handler: src/api/authors.delete
     description: Delete an author
     events:
       - http:
           path: /authors/{id}
           method: DELETE
   listAuthorPublications:
-    handler: api/publications.index
+    handler: src/api/publications.index
     memorySize: 128
     description: List all publications of an author
     events:
@@ -78,28 +78,28 @@ functions:
           path: /authors/{author_id}/publications
           method: GET
   saveAuthorPublication:
-    handler: api/publications.store
+    handler: src/api/publications.store
     description: Save a new publication of an author
     events:
       - http:
           path: /authors/{author_id}/publications
           method: POST
   authorPublicationDetails:
-    handler: api/publications.show
+    handler: src/api/publications.show
     description: Show details of an author's publication
     events:
       - http:
           path: /authors/{author_id}/publications/{id}
           method: GET
   updateAuthorPublication:
-    handler: api/publications.update
+    handler: src/api/publications.update
     description: Update an author's publication
     events:
       - http:
           path: /authors/{author_id}/publications/{id}
           method: PATCH
   deleteAuthorPublication:
-    handler: api/publications.delete
+    handler: src/api/publications.delete
     description: Delete an author's publication
     events:
       - http:
