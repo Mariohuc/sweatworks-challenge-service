@@ -3,7 +3,7 @@ const { Author } = require('../models');
 module.exports.index = async (event, context, callback) => {
   try {
     const authors = await Author.findAll({
-      attributes: ['id', 'firstName', 'lastName', 'email']
+      attributes: ['id', 'firstName', 'lastName', 'email'], order: [ ['id', 'ASC'] ]
     });
     return {
       statusCode: 200,
@@ -53,23 +53,24 @@ module.exports.show = async (event, context, callback) => {
 module.exports.update = async (event, context, callback) => {
   try {
     const author_id = event.pathParameters.id;
-    const { firstName, lastName, birthDate } = JSON.parse(event.body);
+    const { firstName, lastName, email, birthDate } = JSON.parse(event.body);
     const author = await Author.findByPk(author_id);
     if( !author ){
       return {
         statusCode: 404, body: JSON.stringify({  message: 'Not found!',  id: author_id })
       }
     }
-    author.firstName = firstName;
-    author.lastName = lastName;
-    author.birthDate = birthDate;
+    if(firstName) author.firstName = firstName;
+    if(lastName) author.lastName = lastName;
+    if(email) author.email = email;
+    if(birthDate) author.birthDate = birthDate;
     await author.save();
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         message: 'Successful update!',
-        id: author_id
+        id: author.id
       }, null, 2)
     };
   } catch (error) {
@@ -94,7 +95,7 @@ module.exports.delete = async (event, context, callback) => {
       statusCode: 200,
       body: JSON.stringify({ 
         message: 'Successful elimination!',
-        id: author_id 
+        id: author.id 
       }, null, 2)
     };
   } catch (error) {

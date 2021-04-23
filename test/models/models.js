@@ -5,9 +5,15 @@ chai.use(chaiAsPromised); //chai-as-promised extends Chai with a fluent language
 const expect = chai.expect;
 
 const { Author, Publication } = require('../../src/models')
+const truncate = require('../truncate');
 
-describe("Author tests using EXPECT interface from CHAI module: ", function () {
-  
+describe("Author Model tests using EXPECT interface from CHAI module: ", function () {
+
+  beforeEach(async () => {
+    console.info("Before each tests: truncate");
+    await truncate();
+  });
+
   describe("Check CRUD operations: ", function () {
     it('Check bulkCreate() and findAll() methods with 3 authors previously created', async function(){
       await Author.bulkCreate([
@@ -61,10 +67,18 @@ describe("Author tests using EXPECT interface from CHAI module: ", function () {
     });
   });
 
+  after(function () {
+    console.info("After all Author Model tests");
+  });
 });
 
 
-describe("Publication tests using EXPECT interface from CHAI module: ", function () {
+describe("Publication Model tests using EXPECT interface from CHAI module: ", function () {
+
+  beforeEach(async () => {
+    console.info("Before each tests: truncate");
+    await truncate();
+  });
   
   describe("Check CRUD operations: ", function () {
     it('Check createPublication() and getPublications() methods with 3 publications previously created', async function(){
@@ -118,6 +132,10 @@ describe("Publication tests using EXPECT interface from CHAI module: ", function
 
       expect(toCompare).to.equal(null);
     });
+  });
+
+  after(function () {
+    console.info("After all Publication Model tests");
   });
 
 });

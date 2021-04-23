@@ -10,7 +10,7 @@ module.exports.index = async (event, context, callback) => {
       }
     }
     const publications = await author.getPublications({
-      attributes: ['id', 'title', 'body']
+      attributes: ['id', 'title', 'body'], order: [ ['id', 'ASC'] ]
     });
     return {
       statusCode: 200,
@@ -97,7 +97,7 @@ module.exports.update = async (event, context, callback) => {
       statusCode: 200,
       body: JSON.stringify({
         message: 'Successful update!',
-        publicationId
+        publicationId: publication.id
       }, null, 2)
     };
   } catch (error) {
@@ -129,7 +129,7 @@ module.exports.delete = async (event, context, callback) => {
       statusCode: 200,
       body: JSON.stringify({ 
         message: 'Successful elimination!',
-        publicationId
+        publicationId: publication.id
       }, null, 2)
     };
   } catch (error) {
