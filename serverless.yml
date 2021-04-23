@@ -21,6 +21,7 @@ service: sweatworks-challenge-service
 frameworkVersion: "2"
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-offline #serverless-offline needs to be last in the list
 
 custom:
@@ -39,35 +40,35 @@ functions:
     description: List all authors
     events:
       - http:
-          path: /authors
+          path: authors
           method: GET
   saveAuthor:
     handler: src/api/authors.store
     description: Save a new author
     events:
       - http:
-          path: /authors
+          path: authors
           method: POST
   authorDetails:
     handler: src/api/authors.show
     description: Show details of an author
     events:
       - http:
-          path: /authors/{id}
+          path: authors/{authorId}
           method: GET
   updateAuthor:
     handler: src/api/authors.update
     description: Update an author
     events:
       - http:
-          path: /authors/{id}
+          path: authors/{authorId}
           method: PATCH
   deleteAuthor:
     handler: src/api/authors.delete
     description: Delete an author
     events:
       - http:
-          path: /authors/{id}
+          path: authors/{authorId}
           method: DELETE
   listAuthorPublications:
     handler: src/api/publications.index
@@ -75,33 +76,33 @@ functions:
     description: List all publications of an author
     events:
       - http:
-          path: /authors/{author_id}/publications
+          path: authors/{authorId}/publications
           method: GET
   saveAuthorPublication:
     handler: src/api/publications.store
     description: Save a new publication of an author
     events:
       - http:
-          path: /authors/{author_id}/publications
+          path: authors/{authorId}/publications
           method: POST
   authorPublicationDetails:
     handler: src/api/publications.show
     description: Show details of an author's publication
     events:
       - http:
-          path: /authors/{author_id}/publications/{id}
+          path: authors/{authorId}/publications/{publicationId}
           method: GET
   updateAuthorPublication:
     handler: src/api/publications.update
     description: Update an author's publication
     events:
       - http:
-          path: /authors/{author_id}/publications/{id}
+          path: authors/{authorId}/publications/{publicationId}
           method: PATCH
   deleteAuthorPublication:
     handler: src/api/publications.delete
     description: Delete an author's publication
     events:
       - http:
-          path: /authors/{author_id}/publications/{id}
+          path: authors/{authorId}/publications/{publicationId}
           method: DELETE

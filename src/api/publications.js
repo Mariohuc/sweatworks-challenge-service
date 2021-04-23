@@ -2,7 +2,7 @@ const { Author, Publication } = require('../models');
 
 module.exports.index = async (event, context, callback) => {
   try {
-    const authorId = event.pathParameters.author_id;
+    const authorId = event.pathParameters.authorId;
     const author = await Author.findByPk(authorId);
     if( !author ){
       return {
@@ -23,7 +23,7 @@ module.exports.index = async (event, context, callback) => {
 
 module.exports.store = async (event, context, callback) => {
   try {
-    const authorId = event.pathParameters.author_id;
+    const authorId = event.pathParameters.authorId;
     const { title, body } = JSON.parse(event.body); //it's necesary to parse event's body
     const author = await Author.findByPk(authorId);
     if( !author ){
@@ -48,14 +48,14 @@ module.exports.store = async (event, context, callback) => {
 
 module.exports.show = async (event, context, callback) => {
   try {
-    const authorId = event.pathParameters.author_id;
+    const authorId = event.pathParameters.authorId;
     const author = await Author.findByPk(authorId);
     if( !author ){
       return {
         statusCode: 404, body: JSON.stringify({  message: 'Author not found!',  authorId })
       }
     }
-    const publicationId = event.pathParameters.id;
+    const publicationId = event.pathParameters.publicationId;
     const [publication] = await author.getPublications({
       where: { id: publicationId }
     });
@@ -74,14 +74,14 @@ module.exports.show = async (event, context, callback) => {
 
 module.exports.update = async (event, context, callback) => {
   try {
-    const authorId = event.pathParameters.author_id;
+    const authorId = event.pathParameters.authorId;
     const author = await Author.findByPk(authorId);
     if( !author ){
       return {
         statusCode: 404, body: JSON.stringify({  message: 'Author not found!',  authorId })
       }
     }
-    const publicationId = event.pathParameters.id;
+    const publicationId = event.pathParameters.publicationId;
     const { title, body } = JSON.parse(event.body); //it's necesary to parse event's body
     const publication = await Publication.findByPk(publicationId);
     if( !publication || author.id !== publication.authorId ){
@@ -109,14 +109,14 @@ module.exports.update = async (event, context, callback) => {
 
 module.exports.delete = async (event, context, callback) => {
   try {
-    const authorId = event.pathParameters.author_id;
+    const authorId = event.pathParameters.authorId;
     const author = await Author.findByPk(authorId);
     if( !author ){
       return {
         statusCode: 404, body: JSON.stringify({  message: 'Author not found!', authorId })
       }
     }
-    const publicationId = event.pathParameters.id;
+    const publicationId = event.pathParameters.publicationId;
     const publication = await Publication.findByPk(publicationId);
     if( !publication || author.id !== publication.authorId ){
       return {

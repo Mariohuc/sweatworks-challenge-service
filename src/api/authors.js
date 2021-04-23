@@ -35,7 +35,7 @@ module.exports.store = async (event, context, callback) => {
 
 module.exports.show = async (event, context, callback) => {
   try {
-    const author_id = event.pathParameters.id;
+    const author_id = event.pathParameters.authorId;
     const author = await Author.findByPk(author_id);
 
     return {
@@ -52,7 +52,7 @@ module.exports.show = async (event, context, callback) => {
 
 module.exports.update = async (event, context, callback) => {
   try {
-    const author_id = event.pathParameters.id;
+    const author_id = event.pathParameters.authorId;
     const { firstName, lastName, email, birthDate } = JSON.parse(event.body);
     const author = await Author.findByPk(author_id);
     if( !author ){
@@ -82,7 +82,7 @@ module.exports.update = async (event, context, callback) => {
 
 module.exports.delete = async (event, context, callback) => {
   try {
-    const author_id = event.pathParameters.id;
+    const author_id = event.pathParameters.authorId;
     const author = await Author.findByPk(author_id);
     if( !author ){
       return {

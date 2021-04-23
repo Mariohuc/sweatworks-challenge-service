@@ -1,11 +1,8 @@
-const authorFactory = require('./factories/author');
+const authorFactory = require('./factories/factories');
 // Give me a user with all the defaults
 (async () => {
-  const user1 = await authorFactory.create();
-  console.log(user1.id);
-  // Give me a user with a specific first name
-  const user2 = await authorFactory.create();
-  console.log(user2.id);
+  // three times - 3 authors and 5 posts by each author created
+  for(let i=0; i < 3; i++) await authorFactory.createAuthorWithPosts(); 
 
   return;
 })()

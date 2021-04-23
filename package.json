@@ -4,7 +4,11 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "cross-env NODE_ENV=development ./node_modules/.bin/mocha",
+    "migrate": "npx sequelize-cli db:migrate --env development",
+    "seed": "cross-env NODE_ENV=development node src/seeders/seeder.js",
+    "start": "cross-env NODE_ENV=development sls offline",
+    "deploy": "cross-env NODE_ENV=production sls deploy"
   },
   "keywords": [],
   "author": "",
@@ -12,8 +16,10 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
+    "cross-env": "^7.0.3",
     "mocha": "^8.3.2",
     "sequelize-cli": "^6.2.0",
+    "serverless-dotenv-plugin": "^3.9.0",
     "serverless-offline": "^6.9.0",
     "supertest": "^6.1.3"
   },
